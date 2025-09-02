@@ -1,3 +1,6 @@
+import LoginPage from "./pages/LoginPage";
+import FeedPage from "./pages/FeedPage";
+
 export default function App() {
-  return <h1>Hello from React</h1>;
+  return <FeedPage />;
 }

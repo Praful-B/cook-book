@@ -1,0 +1,19 @@
+{
+  "_id": "",
+  "username": "",
+  "email": "",
+  "passwordsHash": "hashedPasswords",
+  "AccCreatedAt": "date",
+  "recipe_owned": ["this should reference _id2"],
+
+  "$recipe": "--------------------------------------a different table--------------------------------------",
+  "_id2": "ObjectId",
+  "title": "",
+  "description": "",
+  "ingredients": [],
+  "instructions": "",
+  "images_referece": [],
+  "author": "ObjectId(User) --> this should reference user",
+  "createdAt": "Date",
+  "youtubeLink": "if avalable"
+}
