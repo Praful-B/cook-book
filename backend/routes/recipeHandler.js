@@ -2,31 +2,34 @@ const express = require('express');
 const Recipie = require('../models/Recipe');
 const router = express.Router();
 
+/***
+ * api  endpoint to add a recipie to the recipie db
+ */
 router.post('/new', async (req, res) => {
-	const reqestedData = req.body;
+	const requestedData = req.body;
 
 	if (
-		!reqestedData.title ||
-		!reqestedData.description ||
-		!reqestedData.ingredients ||
-		!reqestedData.instruction ||
-		!reqestedData.author
+		!requestedData.title ||
+		!requestedData.description ||
+		!requestedData.ingredients ||
+		!requestedData.instruction ||
+		!requestedData.author
 	) {
 		return res
 			.status(400)
-			.json({ error: 'all required felilds need to be filled' });
+			.json({ error: 'all required fields need to be filled' });
 	}
 	try {
 		const recipie = new Recipie({
-			author: reqestedData.author,
-			title: reqestedData.title,
-			description: reqestedData.description,
-			ingredients: reqestedData.ingredients,
-			instruction: reqestedData.instruction,
-			image_reference: reqestedData.image_reference
-				? reqestedData.image_reference
+			author: requestedData.author,
+			title: requestedData.title,
+			description: requestedData.description,
+			ingredients: requestedData.ingredients,
+			instruction: requestedData.instruction,
+			image_reference: requestedData.image_reference
+				? requestedData.image_reference
 				: null,
-			youtube_reference: reqestedData.youtube_reference
+			youtube_reference: requestedData.youtube_reference
 				? requestAnimationFrame.youtube_reference
 				: null,
 		});
@@ -39,5 +42,23 @@ router.post('/new', async (req, res) => {
 		return res.status(500).json({ err: `Internal server error: ${err}` });
 	}
 });
+
+router.post('/edit', async (req, res) => {
+})
+
+router.post('/delete', async (req, res) => {
+	try {
+		const postUuid = req.body.uuid;
+
+		if (!postUuid) {
+			return res.status(401).json({ error: 'required details missing' });
+		}
+		const deletedRecipie = await Recipie.findOneAndDelete({uuid : postUuid});
+		res.status(200).json(deletedRecipie);
+	} catch (err) {
+		console.error('error: while deleting a recipie', err);
+	}
+});
+
 
 module.exports = router;

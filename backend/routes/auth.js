@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
@@ -9,7 +10,6 @@ const router = express.Router();
  *  this api takes in { email, username, password } from req.body
  *  this adds a new user to -> test/users
  */
-
 router.post('/register', async (req, res) => {
 	try {
 		const { email, username, password } = req.body;
@@ -39,13 +39,36 @@ router.post('/register', async (req, res) => {
 	}
 });
 
-// watch web dev simplified's JWT and authentication video
-router.post('/login', async (req, res) => {
-	// auth user
-	// TODO: do this later
+// // watch web dev simplified's JWT and authentication video
+// router.post('/login', async (req, res) => {
+// 	try {
+// 		const { username, password } = req.body;
 
-	const { email, password } = req.body;
-	await User.findOne({ email: email });
-});
+// 		if (!username || !password) {
+// 			return res
+// 				.status(401)
+// 				.json({ error: 'all credentials are required' });
+// 		}
+// 		const user = await User.findOne({ username });
+// 		if (!user || !(await bcrypt.compare(password, user.password))) {
+// 			return res.status(401).json({ error: 'invalid credentials' });
+// 		}
+
+// 		const token = jwt.sign(
+// 			{ userId: user.uuid, username: user.username },
+// 			process.env.JWT_SECRET,
+// 			{ expiresIn: '24h' }
+// 		);
+
+// 		return res.json({
+// 			success: true,
+// 			token,
+// 			user: { id: user.uuid, email: user.email, username: user.username },
+// 		});
+// 	} catch (err) {
+// 		console.error('error while login', err);
+// 		return res.status(500).json({ error: 'Login failed' });
+// 	}
+// });
 
 module.exports = router;
