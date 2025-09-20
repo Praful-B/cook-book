@@ -45,8 +45,6 @@ router.post('/new', auth, async (req, res) => {
 });
 
 router.post('/edit', auth, async (req, res) => {
-
-
 });
 
 router.post('/delete', auth, async (req, res) => {
