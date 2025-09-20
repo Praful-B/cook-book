@@ -1,11 +1,12 @@
 const express = require('express');
 const Recipie = require('../models/Recipe');
-const router = express.Router();
+const router = express.Router()
+const auth = require('../middleware/auth');
 
 /***
  * api  endpoint to add a recipie to the recipie db
  */
-router.post('/new', async (req, res) => {
+router.post('/new', auth, async (req, res) => {
 	const requestedData = req.body;
 
 	if (
@@ -43,10 +44,12 @@ router.post('/new', async (req, res) => {
 	}
 });
 
-router.post('/edit', async (req, res) => {
-})
+router.post('/edit', auth, async (req, res) => {
 
-router.post('/delete', async (req, res) => {
+
+});
+
+router.post('/delete', auth, async (req, res) => {
 	try {
 		const postUuid = req.body.uuid;
 
